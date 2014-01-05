@@ -109,8 +109,10 @@ class ChristmasSongPlayer {
 		for(int i = 0 ; i<noiseData.length;i++){
 			noiseData[i] = WaveGenerator.noise();
 		}
-		
+		playSong(noiseData); 	
 		//double[] songData = loadSongData(Song.jingleBells(), 160.0);
+		//playSong(songData);
+
 		//double[] songData = loadSongData(Song.rudolfTheRedNosedReindeer(), 160.0); // also try this one
 		
 		// TODO: add echo effect here
