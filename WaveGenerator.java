@@ -1,13 +1,13 @@
 class WaveGenerator {
 
-	/**
-	 * 
-	 * TODO: Implement this function
-	 * 
-	 * @return White noise amplitude [-1.0, 1.0] 
-	 */
 	static double noise() {
-		return 0; // hint: use Math.random()
+		// Math.random returns [0,1[
+	 	// @return White noise amplitude [-1.0, 1.0] 
+		double result;
+		
+		result = -1 + Math.random() + Math.random();
+
+		return result; 	
 	}
 
 	/**

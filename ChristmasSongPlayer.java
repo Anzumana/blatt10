@@ -105,7 +105,10 @@ class ChristmasSongPlayer {
 	}
 	
 	public static void main(String[] args) {
-		// TODO: create noise data...
+		double[] noiseData = new double[100000];
+		for(int i = 0 ; i<noiseData.length;i++){
+			noiseData[i] = WaveGenerator.noise();
+		}
 		
 		//double[] songData = loadSongData(Song.jingleBells(), 160.0);
 		//double[] songData = loadSongData(Song.rudolfTheRedNosedReindeer(), 160.0); // also try this one
