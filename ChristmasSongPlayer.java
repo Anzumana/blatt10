@@ -39,11 +39,17 @@ class ChristmasSongPlayer {
 		AudioInputStream stream = new AudioInputStream(new ByteArrayInputStream(buffer.array()), format, song.length);
 		try {
 			Clip clip = AudioSystem.getClip();
+			System.out.println("1");
 			clip.open(stream);
+			System.out.println("2");
 			clip.start();
+			System.out.println("3");
 			Thread.sleep(1000 * 5); // allow AudioInputStream some time to buffer
+			System.out.println("4");
 			clip.drain();
+			System.out.println("5");
 		} catch (Exception e) {
+			System.out.println(e);
 			System.out.println("Playback failed :(");
 		}
 	}
@@ -52,6 +58,13 @@ class ChristmasSongPlayer {
 	 * 
 	 * TODO: Describe what this function does and why it is useful.
 	 * What happens when this function always returns 1.0?
+	 Da die Toene nicht direkt mit voller lautstaerke anfangen sollten konenn wir durch die funtion
+	 getVolume den die Lautstaerke des tons nach und nach erhoehen. 
+	 dies ist sinnvoll da die toene die wir so produzieren "echter " klingen.
+	 selbiges gilt fuer wenn der ton aufhoert. durch ie wahl der konstanten definieren wir wie toene ausklingen.
+	 wenn die funktion immer 1 zurueckgeben wuerde wuerden toene immer in voller lautstaerje anfangen.
+
+
 	 * 
 	 * @param index Position inside current note region
 	 * @param size Total length of current note region
@@ -78,18 +91,22 @@ class ChristmasSongPlayer {
 	 * @return Audio buffer (doubles in range [-1.0,1.0]) for the song, ready to be played back
 	 */
 	static double[] loadSongData(Song song, double bpm) {
-		int samplesPerBeat = 0; // number of audio samples per beat, TODO
-		int totalBeats = 0; // number of beats of this song, assumes 4/4 measures (one measure has 4 beats), TODO
-		int totalSamples = 0; // number of audio samples for this song, TODO
+		int samplesPerBeat = 60*samplesPerSecond / bpm; // number of audio samples per beat, TODO
+		System.out.println(samplesPerBeat);
+		int totalBeats = 4* song.length; // number of beats of this song, assumes 4/4 measures (one measure has 4 beats), TODO
+		int totalSamples = totalBeats* samplesPerBeat; // number of audio samples for this song, TODO
 		double[] buffer = new double[totalSamples]; // stores the audio samples of this song
 		
 		int outputPos = 0;
 		for (Note n : song.notes) { // gets the next note of the song
-			int nSamples = 0; // the number of samples to represent this note, TODO
+			int samplesPerMeasure = 4 * samplesPerBeat;
+			int nSamples = n.length * samplesPerMeasure; // the number of samples to represent this note, TODO
+			double noise = WaveGenerator.noise();
 			
 			for (int j = 0; j < nSamples; ++j) {
 				double time = (double)j / samplesPerSecond;
-				double value = 0; // TODO
+				//double value = n.pitch.frequency; // TODO
+				double value = noise; // TODO
 				// hint: to get the frequency of a note, use: n.pitch.frequency
 				
 				// todo: this is your space for experimentation...
@@ -105,13 +122,15 @@ class ChristmasSongPlayer {
 	}
 	
 	public static void main(String[] args) {
+		/*
 		double[] noiseData = new double[100000];
 		for(int i = 0 ; i<noiseData.length;i++){
 			noiseData[i] = WaveGenerator.noise();
 		}
 		playSong(noiseData); 	
-		//double[] songData = loadSongData(Song.jingleBells(), 160.0);
-		//playSong(songData);
+		*/
+		double[] songData = loadSongData(Song.jingleBells(), 160.0);
+		playSong(songData);
 
 		//double[] songData = loadSongData(Song.rudolfTheRedNosedReindeer(), 160.0); // also try this one
 		
