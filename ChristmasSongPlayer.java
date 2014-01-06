@@ -91,16 +91,16 @@ class ChristmasSongPlayer {
 	 * @return Audio buffer (doubles in range [-1.0,1.0]) for the song, ready to be played back
 	 */
 	static double[] loadSongData(Song song, double bpm) {
-		int samplesPerBeat = 60*samplesPerSecond / bpm; // number of audio samples per beat, TODO
+		int samplesPerBeat = 60*samplesPerSecond / (int)bpm; // number of audio samples per beat, TODO
 		System.out.println(samplesPerBeat);
-		int totalBeats = 4* song.length; // number of beats of this song, assumes 4/4 measures (one measure has 4 beats), TODO
+		int totalBeats = 4*(int) song.length; // number of beats of this song, assumes 4/4 measures (one measure has 4 beats), TODO
 		int totalSamples = totalBeats* samplesPerBeat; // number of audio samples for this song, TODO
 		double[] buffer = new double[totalSamples]; // stores the audio samples of this song
 		
 		int outputPos = 0;
 		for (Note n : song.notes) { // gets the next note of the song
 			int samplesPerMeasure = 4 * samplesPerBeat;
-			int nSamples = n.length * samplesPerMeasure; // the number of samples to represent this note, TODO
+			int nSamples = (int) n.length * samplesPerMeasure; // the number of samples to represent this note, TODO
 			double noise = WaveGenerator.noise();
 			
 			for (int j = 0; j < nSamples; ++j) {
@@ -122,15 +122,25 @@ class ChristmasSongPlayer {
 	}
 	
 	public static void main(String[] args) {
-		/*
+/*
 		double[] noiseData = new double[100000];
 		for(int i = 0 ; i<noiseData.length;i++){
 			noiseData[i] = WaveGenerator.noise();
 		}
 		playSong(noiseData); 	
-		*/
+*/
+/*
+		
 		double[] songData = loadSongData(Song.jingleBells(), 160.0);
 		playSong(songData);
+*/
+
+		System.out.println(Math.PI);
+		System.out.println("0: " + Math.sin(0));
+		System.out.println("90: " + Math.sin(90));
+		System.out.println("180 " + Math.sin(180));
+		System.out.println("360 + " + Math.sin(360));
+		System.out.println("720: " + Math.sin(720));
 
 		//double[] songData = loadSongData(Song.rudolfTheRedNosedReindeer(), 160.0); // also try this one
 		
