@@ -91,22 +91,32 @@ class ChristmasSongPlayer {
 	 * @return Audio buffer (doubles in range [-1.0,1.0]) for the song, ready to be played back
 	 */
 	static double[] loadSongData(Song song, double bpm) {
-		int samplesPerBeat = 60*samplesPerSecond / (int)bpm; // number of audio samples per beat, TODO
-		System.out.println(samplesPerBeat);
+		int samplesPerBeat = (60*samplesPerSecond) / (int)bpm; // number of audio samples per beat, TODO
+//		System.out.println("samplesPerBeat: " + samplesPerBeat);
+		System.out.println(song.length);
 		int totalBeats = 4*(int) song.length; // number of beats of this song, assumes 4/4 measures (one measure has 4 beats), TODO
 		int totalSamples = totalBeats* samplesPerBeat; // number of audio samples for this song, TODO
+		System.out.println("totalSamples: " + totalSamples);
 		double[] buffer = new double[totalSamples]; // stores the audio samples of this song
 		
 		int outputPos = 0;
 		for (Note n : song.notes) { // gets the next note of the song
 			int samplesPerMeasure = 4 * samplesPerBeat;
-			int nSamples = (int) n.length * samplesPerMeasure; // the number of samples to represent this note, TODO
-			double noise = WaveGenerator.noise();
+			double tmp = n.length * samplesPerMeasure;
+	//		System.out.println("tmp: " + tmp);
+//			int nSamples =  n.length * samplesPerMeasure; // the number of samples to represent this note, TODO
+			//int nSamples = (int) tmp;
+			int nSamples = (int) tmp;
+	//		System.out.println("samplesPerMeasure: " + samplesPerMeasure);
+	//		System.out.println("n.length: " + n.length);
+	//		System.out.println("nSamples: " + nSamples);
+		//	double noise = WaveGenerator.noise();
 			
 			for (int j = 0; j < nSamples; ++j) {
 				double time = (double)j / samplesPerSecond;
 				//double value = n.pitch.frequency; // TODO
-				double value = noise; // TODO
+//				double value = noise; // TODO
+				double value = WaveGenerator.noise(); // TODO
 				// hint: to get the frequency of a note, use: n.pitch.frequency
 				
 				// todo: this is your space for experimentation...
@@ -123,18 +133,21 @@ class ChristmasSongPlayer {
 	
 	public static void main(String[] args) {
 /*
-		double[] noiseData = new double[100000];
+        double[] noiseData = new double[100000];
+//		double[] noiseData = new double[1058368];
+
 		for(int i = 0 ; i<noiseData.length;i++){
 			noiseData[i] = WaveGenerator.noise();
+
 		}
 		playSong(noiseData); 	
 */
-/*
-		
+        
 		double[] songData = loadSongData(Song.jingleBells(), 160.0);
+		System.out.println(songData.length);
+		
 		playSong(songData);
-*/
-
+/*
 		System.out.println(Math.PI);
 		System.out.println("0: " + Math.sin(0));
 		System.out.println("90: " + Math.sin(90));
@@ -145,8 +158,11 @@ class ChristmasSongPlayer {
 		//double[] songData = loadSongData(Song.rudolfTheRedNosedReindeer(), 160.0); // also try this one
 		
 		// TODO: add echo effect here
-		
+ 
 		// playSong(songData);
+*/
+        
+ 
 	}
 
 }
