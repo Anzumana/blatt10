@@ -19,7 +19,9 @@ class WaveGenerator {
 	 * @return Amplitude [-1.0, 1.0] of sine wave of given frequency at given time
 	 */
 	static double sineWave(double timeInSeconds, double frequency) {
-		return 0; // hint: use Math.sin(...)
+		double result= Math.sin(timeInSeconds);
+			
+		return result; // hint: use Math.sin(...)
 	}
 	
 	/**
